@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mike S Ncube — AI Infrastructure Engineer</title>
+  <meta name="description" content="AI Infrastructure Engineer specializing in RAG architectures, agentic AI systems, and scalable cloud deployments on AWS." />
+  <meta property="og:title" content="Mike S Ncube — AI Infrastructure Engineer" />
+  <meta property="og:description" content="Designing and deploying scalable AI systems using RAG, agentic workflows, and cloud infrastructure for real-world enterprise environments." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Epilogue:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void: #060609; --ink: #0a0a0f; --panel: #111118;
+      --border: rgba(255,255,255,0.07); --muted: rgba(255,255,255,0.38);
+      --text: rgba(255,255,255,0.88); --cyan: #00e5ff;
+      --cyan-dim: rgba(0,229,255,0.10); --amber: #ffb800; --green: #00ff88;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--void);color:var(--text);font-family:'Epilogue',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+    ::selection{background:var(--cyan);color:#000}
+    ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--void)}::-webkit-scrollbar-thumb{background:var(--cyan)}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;transition:all .4s}
+    nav.scrolled{background:rgba(6,6,9,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.05em;color:#fff;text-decoration:none}
+    .nav-logo span{color:var(--cyan)}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+    .nav-links a:hover{color:#fff}.nav-links a:hover::after{transform:scaleX(1)}
+    .nav-cta{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--cyan);color:var(--cyan);padding:.55rem 1.4rem;text-decoration:none;transition:all .3s}
+    .nav-cta:hover{background:var(--cyan);color:#000}
+    .ham{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:200}
+    .ham span{display:block;width:24px;height:1.5px;background:#fff;transition:all .3s}
+
+    #hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden}
+    .grid-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,229,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.025) 1px,transparent 1px);background-size:70px 70px;mask-image:radial-gradient(ellipse at 70% 50%,black 20%,transparent 70%)}
+    .orb{position:absolute;border-radius:50%;filter:blur(140px);pointer-events:none}
+    .orb1{width:700px;height:700px;background:rgba(0,229,255,.06);top:-150px;right:-150px}
+    .orb2{width:400px;height:400px;background:rgba(255,184,0,.04);bottom:50px;left:-100px}
+    .hero-left{position:relative;z-index:2}
+    .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:.75rem;margin-bottom:2rem}
+    .eyebrow::before{content:'';width:28px;height:1px;background:var(--cyan);display:block}
+    .hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3.2rem,5.5vw,6rem);line-height:.92;color:#fff;letter-spacing:-.025em;margin-bottom:1rem}
+    .hero-role{font-family:'Syne',sans-serif;font-size:clamp(1rem,1.8vw,1.3rem);font-weight:600;color:var(--cyan);margin-bottom:2rem;letter-spacing:.02em}
+    .hero-desc{font-size:1rem;color:var(--muted);line-height:1.85;max-width:490px;margin-bottom:3rem}
+    .hero-desc strong{color:var(--text);font-weight:400}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn-p{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;background:var(--cyan);color:#000;padding:.9rem 2rem;text-decoration:none;font-weight:500;transition:all .3s}
+    .btn-p:hover{background:#fff;transform:translateY(-2px)}
+    .btn-s{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--border);color:var(--text);padding:.9rem 2rem;text-decoration:none;transition:all .3s}
+    .btn-s:hover{border-color:var(--cyan);color:var(--cyan)}
+    .stats-row{display:flex;gap:2.5rem;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+    .stat-n{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:#fff;line-height:1}
+    .stat-n em{color:var(--cyan);font-style:normal}
+    .stat-l{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+    .hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}
+    .photo-wrap{position:relative;width:400px;height:500px}
+    .photo-frame{position:absolute;inset:0;border:1px solid rgba(0,229,255,.22);overflow:hidden}
+    .photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+    .photo-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(6,6,9,.75) 100%)}
+    .scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.5;animation:sc 4s ease-in-out infinite;top:0;z-index:2}
+    @keyframes sc{0%,100%{top:0;opacity:.5}50%{top:100%;opacity:.15}}
+    .photo-deco{position:absolute;bottom:-18px;right:-18px;width:80%;height:80%;border:1px solid rgba(0,229,255,.08);pointer-events:none}
+    .status-chip{position:absolute;bottom:-24px;left:-20px;background:var(--panel);border:1px solid var(--border);padding:.9rem 1.4rem;z-index:5;display:flex;align-items:center;gap:.75rem}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:p 2s infinite}
+    @keyframes p{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+    .status-txt{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green)}
+
+    .ticker{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.8rem 0;background:var(--panel)}
+    .ticker-inner{display:flex;gap:4rem;width:max-content;animation:tk 28s linear infinite}
+    @keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .t-item{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:1.5rem}
+    .t-item::after{content:'◆';color:var(--cyan);font-size:.45rem}
+
+    section{padding:7rem 3rem}
+    .lbl{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:.9rem;margin-bottom:1.2rem}
+    .lbl::before{content:'';width:22px;height:1px;background:var(--cyan)}
+    h2.st{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,4vw,4.2rem);color:#fff;line-height:1;letter-spacing:-.02em;margin-bottom:1rem}
+    .sub{color:var(--muted);max-width:540px;font-size:1rem;line-height:1.8;margin-bottom:4rem}
+
+    #about{background:var(--ink)}
+    .about-g{display:grid;grid-template-columns:320px 1fr;gap:6rem;align-items:start}
+    .img-frame{position:relative;border:1px solid rgba(0,229,255,.2)}
+    .img-frame img{width:100%;display:block;filter:grayscale(15%);transition:filter .4s}
+    .img-frame:hover img{filter:none}
+    .img-deco{position:absolute;bottom:-14px;right:-14px;width:calc(100% - 24px);height:calc(100% - 24px);border:1px solid rgba(0,229,255,.08);pointer-events:none}
+    .tags-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.75rem}
+    .tag{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .85rem;border:1px solid var(--border);color:var(--muted)}
+    .about-body p{color:var(--muted);line-height:1.9;margin-bottom:1.5rem;font-size:.98rem}
+    .about-body p strong{color:var(--text);font-weight:400}
+    .cert-block{margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+    .cert-head{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem}
+    .cert-row{display:flex;align-items:center;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--border);font-size:.87rem;color:var(--muted)}
+    .cert-row::before{content:'›';color:var(--cyan)}
+
+    #projects{background:var(--void)}
+    .proj-list{display:flex;flex-direction:column;gap:1.5rem}
+    .proj{border:1px solid var(--border);background:var(--panel);padding:2.5rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+    .proj::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .3s}
+    .proj:hover{border-color:rgba(0,229,255,.28);transform:translateY(-3px)}
+    .proj:hover::before{opacity:1}
+    .proj-num{position:absolute;top:1.5rem;right:2rem;font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;color:rgba(255,255,255,.025);line-height:1;pointer-events:none}
+    .badges{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.25rem}
+    .badge{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .65rem;border:1px solid}
+    .bc{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.07)}
+    .ba{border-color:var(--amber);color:var(--amber);background:rgba(255,184,0,.07)}
+    .bg{border-color:var(--green);color:var(--green);background:rgba(0,255,136,.07)}
+    .proj-name{font-family:'Syne',sans-serif;font-size:1.45rem;font-weight:700;color:#fff;line-height:1.2;margin-bottom:1.5rem;max-width:680px}
+    .metrics{display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 1.5rem;margin-bottom:1.5rem;background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.1)}
+    .m-val{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;color:var(--cyan);line-height:1}
+    .m-lbl{font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+    .proj-body{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.5rem}
+    .pbl{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:.65rem}
+    .pt{font-size:.88rem;color:var(--muted);line-height:1.7}
+    .stack{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem}
+    .pill{font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.06em;padding:.28rem .7rem;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--muted);transition:all .2s}
+    .pill:hover{border-color:var(--cyan);color:var(--cyan)}
+    .proj-links{display:flex;gap:.75rem}
+    .pl{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.55rem 1.2rem;border:1px solid var(--border);color:var(--muted);text-decoration:none;transition:all .25s}
+    .pl:hover{border-color:var(--cyan);color:var(--cyan)}
+
+    #skills{background:var(--ink)}
+    .skills-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:4rem}
+    .sc{background:var(--panel);padding:2rem}
+    .sc-ic{font-size:1.4rem;margin-bottom:.9rem}
+    .sc-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.3rem}
+    .sc-sub{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:1.1rem}
+    .sl{list-style:none}
+    .sl li{font-size:.84rem;color:var(--muted);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.03);display:flex;align-items:center;gap:.55rem}
+    .sl li::before{content:'›';color:var(--cyan);flex-shrink:0}
+    .certs-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    .cc{border:1px solid var(--border);padding:1.2rem 1.4rem;background:var(--panel);transition:border-color .25s}
+    .cc:hover{border-color:rgba(0,229,255,.3)}
+    .cc-p{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:.45rem}
+    .cc-n{font-size:.86rem;color:var(--text);line-height:1.4}
+
+    #blog{background:var(--void)}
+    .blog-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .bc2{border:1px solid var(--border);background:var(--panel);padding:2rem;text-decoration:none;display:block;transition:all .3s}
+    .bc2:hover{border-color:rgba(0,229,255,.3);transform:translateY(-4px)}
+    .bt{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:.9rem}
+    .bn{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:.7rem}
+    .be{font-size:.84rem;color:var(--muted);line-height:1.7}
+    .bm{margin-top:1.4rem;padding-top:.9rem;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--muted)}
+
+    #contact{background:var(--ink)}
+    .contact-g{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+    .ci p{color:var(--muted);line-height:1.8;margin-bottom:2rem;font-size:.98rem}
+    .cl-list{display:flex;flex-direction:column;gap:.9rem}
+    .cl-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;border:1px solid var(--border);background:var(--panel);text-decoration:none;color:var(--text);transition:all .25s}
+    .cl-item:hover{border-color:var(--cyan);color:var(--cyan)}
+    .cl-ic{color:var(--cyan);min-width:22px;font-size:1rem;font-style:normal}
+    .cl-lbl{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.12rem}
+    .cl-val{font-size:.88rem}
+    form{display:flex;flex-direction:column;gap:1rem}
+    .fg{display:flex;flex-direction:column;gap:.4rem}
+    .fl{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+    input,textarea{background:var(--panel);border:1px solid var(--border);color:var(--text);padding:.85rem 1rem;font-family:'Epilogue',sans-serif;font-size:.9rem;outline:none;transition:border-color .25s;width:100%}
+    input:focus,textarea:focus{border-color:var(--cyan)}
+    textarea{resize:vertical;min-height:130px}
+    .fsub{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;background:var(--cyan);color:#000;padding:.95rem 2rem;border:none;cursor:pointer;font-weight:500;transition:all .3s;align-self:flex-start}
+    .fsub:hover{background:#fff;transform:translateY(-2px)}
+
+    footer{background:var(--void);border-top:1px solid var(--border);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between}
+    .fc{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .fs-list{display:flex;gap:1.25rem}
+    .fs{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s}
+    .fs:hover{color:var(--cyan)}
+
+    .fi{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+    .fi.v{opacity:1;transform:translateY(0)}
+
+    @media(max-width:1100px){
+      #hero{grid-template-columns:1fr}
+      .hero-right{margin-top:4rem}
+      .photo-wrap{width:320px;height:400px}
+      .about-g{grid-template-columns:1fr}
+      .skills-g{grid-template-columns:repeat(2,1fr)}
+      .certs-g{grid-template-columns:repeat(2,1fr)}
+      .blog-g{grid-template-columns:repeat(2,1fr)}
+      .contact-g{grid-template-columns:1fr;gap:3rem}
+      section{padding:5rem 2rem}
+      nav{padding:1rem 1.5rem}
+    }
+    @media(max-width:700px){
+      .nav-links{display:none;flex-direction:column;position:fixed;inset:0;background:var(--void);align-items:center;justify-content:center;gap:2.5rem;z-index:150}
+      .nav-links.open{display:flex}
+      .ham{display:flex}
+      .skills-g,.certs-g,.blog-g{grid-template-columns:1fr}
+      .proj-body{grid-template-columns:1fr}
+      .stats-row{gap:1.5rem;flex-wrap:wrap}
+      footer{flex-direction:column;gap:1rem;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#hero" class="nav-logo">M<span>.</span>NCUBE</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" onclick="closeMenu()">About</a></li>
+    <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+    <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+    <li><a href="#blog" onclick="closeMenu()">Blog</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+  </ul>
+  <a href="mailto:mikencube03@gmail.com" class="nav-cta">Hire Me</a>
+  <div class="ham" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<section id="hero">
+  <div class="grid-bg"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-left fi">
+    <div class="eyebrow">AI Infrastructure Engineer</div>
+    <h1 class="hero-name">Mike S<br>Ncube</h1>
+    <p class="hero-role">RAG · Agentic AI · Cloud Infrastructure</p>
+    <p class="hero-desc">I design and deploy <strong>scalable AI systems</strong> using RAG architectures, agentic workflows, and cloud infrastructure — built for real-world <strong>enterprise environments</strong>, not toy demos.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-p">View Projects →</a>
+      <a href="#contact" class="btn-s">Let's Connect</a>
+    </div>
+    <div class="stats-row">
+      <div><div class="stat-n">26<em>+</em></div><div class="stat-l">Countries Deployed</div></div>
+      <div><div class="stat-n">92<em>%</em></div><div class="stat-l">ML Accuracy</div></div>
+      <div><div class="stat-n">10<em>M+</em></div><div class="stat-l">Records / Day</div></div>
+      <div><div class="stat-n">60<em>%</em></div><div class="stat-l">Latency Reduction</div></div>
+    </div>
+  </div>
+  <div class="hero-right fi" style="transition-delay:.25s">
+    <div class="photo-wrap">
+      <div class="photo-frame">
+        <div class="scan"></div>
+        <img src="Mike_Org.jpeg" alt="Mike S Ncube" />
+      </div>
+      <div class="photo-deco"></div>
+      <div class="status-chip">
+        <span class="dot"></span>
+        <span class="status-txt">Available for Opportunities</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="t-item">RAG Architecture</span><span class="t-item">Agentic AI Systems</span><span class="t-item">AWS Cloud Infrastructure</span><span class="t-item">LangChain</span><span class="t-item">Vector Databases</span><span class="t-item">Apache Spark</span><span class="t-item">Production Deployment</span><span class="t-item">LLM Orchestration</span><span class="t-item">Enterprise AI</span><span class="t-item">Prompt Engineering</span>
+    <span class="t-item">RAG Architecture</span><span class="t-item">Agentic AI Systems</span><span class="t-item">AWS Cloud Infrastructure</span><span class="t-item">LangChain</span><span class="t-item">Vector Databases</span><span class="t-item">Apache Spark</span><span class="t-item">Production Deployment</span><span class="t-item">LLM Orchestration</span><span class="t-item">Enterprise AI</span><span class="t-item">Prompt Engineering</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="about-g fi">
+    <div>
+      <div class="img-frame">
+        <img src="Mike_3d.png" alt="Mike S Ncube 3D Portrait" />
+        <div class="img-deco"></div>
+      </div>
+      <div class="tags-row">
+        <span class="tag">AI Infrastructure</span><span class="tag">RAG Systems</span>
+        <span class="tag">Agentic AI</span><span class="tag">AWS</span><span class="tag">Production</span>
+      </div>
+    </div>
+    <div class="about-body">
+      <div class="lbl">About Me</div>
+      <h2 class="st">Building the<br>Infrastructure of AI</h2>
+      <p>I'm <strong>Mike S Ncube</strong>, an AI Infrastructure Engineer who bridges the gap between cutting-edge AI research and real-world enterprise deployment. My journey began in cloud architecture, evolved through data engineering, and culminated in designing <strong>production-ready AI systems</strong> that work at scale.</p>
+      <p>I don't just integrate APIs — I architect entire AI pipelines from vector ingestion to agent orchestration, from retrieval logic to cloud failover. My systems have served users across <strong>26 countries</strong>, processed over <strong>10 million records per day</strong>, and reduced operational latency by 60%.</p>
+      <p>My focus is on <strong>RAG architectures</strong> that retrieve with precision, <strong>agentic systems</strong> that reason through complex multi-step workflows, and <strong>AWS cloud infrastructure</strong> that scales without compromise — built for enterprise environments where reliability, compliance, and performance are non-negotiable.</p>
+      <div class="cert-block">
+        <div class="cert-head">// Certifications & Training</div>
+        <div class="cert-row">Generative AI with LLMs — DeepLearning.AI</div>
+        <div class="cert-row">RAG Systems — DeepLearning.AI</div>
+        <div class="cert-row">Agentic AI — DeepLearning.AI</div>
+        <div class="cert-row">LangChain for LLM Applications — DeepLearning.AI</div>
+        <div class="cert-row">AWS Generative AI Introduction</div>
+        <div class="cert-row">AWS Machine Learning Foundations</div>
+        <div class="cert-row">Data Engineering Bootcamp</div>
+        <div class="cert-row">Udacity Generative AI Introduction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="lbl">Case Studies</div>
+  <h2 class="st fi">Production<br>Systems</h2>
+  <p class="sub fi">Enterprise-grade AI infrastructure built to solve real problems at real scale. Problem → Architecture → Tech → Deployment → Impact.</p>
+  <div class="proj-list">
+
+    <div class="proj fi">
+      <div class="proj-num">01</div>
+      <div class="badges"><span class="badge bc">Live Production</span><span class="badge bg">26 Countries</span><span class="badge ba">Fintech + Insurance</span></div>
+      <h3 class="proj-name">Zororo Phumulani Digital Application System — WWF Platform</h3>
+      <div class="metrics">
+        <div><div class="m-val">26</div><div class="m-lbl">Countries Active</div></div>
+        <div><div class="m-val">7</div><div class="m-lbl">Workflow Steps</div></div>
+        <div><div class="m-val">100%</div><div class="m-lbl">FIC Compliant</div></div>
+        <div><div class="m-val">Auto</div><div class="m-lbl">PDF + SMTP</div></div>
+      </div>
+      <div class="proj-body">
+        <div><div class="pbl">// Problem</div><p class="pt">WWF needed a fully digital, compliant insurance application platform onboarding clients across 26 countries while enforcing 18+ age validation, FIC-compliant ID upload, and POPIA/FAIS consent capture — all without manual intervention.</p></div>
+        <div><div class="pbl">// Architecture & Impact</div><p class="pt">7-step workflow engine with dependency enforcement: identity verification → consent capture → payment integration → automated PDF policy generation → multi-recipient SMTP dispatch → audit logging. Deployed on Railway with zero-downtime CI/CD. Operational across all 26 territories.</p></div>
+      </div>
+      <div class="stack">
+        <span class="pill">7-Step Workflow Engine</span><span class="pill">POPIA Compliance</span><span class="pill">FIC ID Verification</span><span class="pill">SMTP Automation</span><span class="pill">PDF Generation</span><span class="pill">Payment Integration</span><span class="pill">Railway</span><span class="pill">Audit Logging</span>
+      </div>
+      <div class="proj-links"><a href="https://github.com/MikeNcube" target="_blank" class="pl">↗ GitHub</a><a href="#contact" class="pl">↗ Request Case Study</a></div>
+    </div>
+
+    <div class="proj fi">
+      <div class="proj-num">02</div>
+      <div class="badges"><span class="badge bc">Data Engineering</span><span class="badge bg">ML Pipeline</span></div>
+      <h3 class="proj-name">End-to-End ML Recommendation & Data Pipeline</h3>
+      <div class="metrics">
+        <div><div class="m-val">92%</div><div class="m-lbl">Prediction Accuracy</div></div>
+        <div><div class="m-val">60%</div><div class="m-lbl">Latency Reduction</div></div>
+        <div><div class="m-val">10M+</div><div class="m-lbl">Records / Day</div></div>
+      </div>
+      <div class="proj-body">
+        <div><div class="pbl">// Problem</div><p class="pt">High-throughput recommendation system handling 10M+ records daily while maintaining sub-second retrieval latency and accurate, personalized predictions at enterprise scale.</p></div>
+        <div><div class="pbl">// Architecture & Impact</div><p class="pt">Distributed ingestion pipeline on Apache Spark with PostgreSQL storage, containerized via Docker. ML model achieved 92% prediction accuracy with 60% latency reduction through optimized data partitioning and caching.</p></div>
+      </div>
+      <div class="stack"><span class="pill">Apache Spark</span><span class="pill">PostgreSQL</span><span class="pill">Docker</span><span class="pill">Python</span><span class="pill">Pandas</span><span class="pill">ML Pipeline</span></div>
+      <div class="proj-links"><a href="https://github.com/MikeNcube" target="_blank" class="pl">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj fi">
+      <div class="proj-num">03</div>
+      <div class="badges"><span class="badge bc">Cloud Architecture</span><span class="badge ba">AWS</span></div>
+      <h3 class="proj-name">AWS Resilient Web Infrastructure Architecture</h3>
+      <div class="proj-body">
+        <div><div class="pbl">// Problem</div><p class="pt">Enterprise client required highly available, auto-scaling infrastructure capable of handling traffic spikes without downtime, with automated deployments and full CI/CD integration.</p></div>
+        <div><div class="pbl">// Architecture & Impact</div><p class="pt">Multi-tier AWS solution: ALB with health checks, Auto Scaling Groups across multiple AZs, EC2 in private subnets, CodePipeline for zero-downtime deployments. Achieved 99.9%+ uptime SLA.</p></div>
+      </div>
+      <div class="stack"><span class="pill">AWS ALB</span><span class="pill">Auto Scaling</span><span class="pill">EC2</span><span class="pill">CI/CD Pipeline</span><span class="pill">Multi-AZ</span><span class="pill">VPC Networking</span><span class="pill">IAM</span></div>
+      <div class="proj-links"><a href="https://github.com/MikeNcube" target="_blank" class="pl">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj fi">
+      <div class="proj-num">04</div>
+      <div class="badges"><span class="badge bc">AI / LLM</span><span class="badge bg">Enterprise RAG</span></div>
+      <h3 class="proj-name">RAG-Based Enterprise AI Knowledge System</h3>
+      <div class="proj-body">
+        <div><div class="pbl">// Problem</div><p class="pt">Enterprise needed an AI knowledge system to query internal documentation with high precision — avoiding hallucinations, respecting access controls, returning context-grounded answers across large document corpora.</p></div>
+        <div><div class="pbl">// Architecture & Impact</div><p class="pt">Full RAG pipeline: document ingestion → semantic chunking → embedding → vector DB → MMR reranking → prompt orchestration → LLM response. Hybrid dense/sparse retrieval for enterprise-scale collections.</p></div>
+      </div>
+      <div class="stack"><span class="pill">Vector Databases</span><span class="pill">LangChain</span><span class="pill">Embedding Models</span><span class="pill">Prompt Orchestration</span><span class="pill">Context Injection</span><span class="pill">MMR Reranking</span><span class="pill">LLM Deployment</span></div>
+      <div class="proj-links"><a href="https://github.com/MikeNcube" target="_blank" class="pl">↗ GitHub</a></div>
+    </div>
+
+    <div class="proj fi">
+      <div class="proj-num">05</div>
+      <div class="badges"><span class="badge bc">Agentic AI</span><span class="badge ba">Workflow Automation</span></div>
+      <h3 class="proj-name">Agentic AI Multi-Step Workflow System</h3>
+      <div class="proj-body">
+        <div><div class="pbl">// Problem</div><p class="pt">Complex business workflows requiring multi-step reasoning, conditional tool calling, and autonomous decision-making across external APIs — beyond single-prompt LLM capability.</p></div>
+        <div><div class="pbl">// Architecture & Impact</div><p class="pt">Multi-agent orchestration: planner decomposes tasks → executors use specialized tools → critic validates → orchestrator manages state and retries. Structured JSON outputs enable reliable, repeatable automation.</p></div>
+      </div>
+      <div class="stack"><span class="pill">Multi-Agent Architecture</span><span class="pill">Tool Calling</span><span class="pill">LangChain</span><span class="pill">Gemini CLI</span><span class="pill">Workflow Automation</span><span class="pill">State Management</span><span class="pill">JSON Outputs</span></div>
+      <div class="proj-links"><a href="https://github.com/MikeNcube" target="_blank" class="pl">↗ GitHub</a></div>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills">
+  <div class="lbl">Technical Expertise</div>
+  <h2 class="st fi">The Stack</h2>
+  <p class="sub fi">Full-spectrum AI infrastructure capability — from model orchestration to cloud deployment.</p>
+  <div class="skills-g fi">
+    <div class="sc"><div class="sc-ic">🧠</div><div class="sc-name">AI & LLM Engineering</div><div class="sc-sub">// Core Expertise</div><ul class="sl"><li>Agentic AI Systems</li><li>RAG Architectures</li><li>LangChain</li><li>Prompt Orchestration</li><li>Gemini CLI</li><li>Vector Databases</li><li>LLM Deployment Patterns</li><li>AI Orchestration</li></ul></div>
+    <div class="sc"><div class="sc-ic">☁️</div><div class="sc-name">Infrastructure & Cloud</div><div class="sc-sub">// AWS & Beyond</div><ul class="sl"><li>AWS EC2, ALB, Auto Scaling</li><li>CI/CD Pipelines</li><li>Terraform</li><li>Railway Deployment</li><li>API Integration</li><li>VPC Networking</li><li>IAM & Security</li><li>High Availability Design</li></ul></div>
+    <div class="sc"><div class="sc-ic">⚡</div><div class="sc-name">Data Engineering & ML</div><div class="sc-sub">// Pipeline Architecture</div><ul class="sl"><li>Apache Spark</li><li>Python</li><li>Pandas</li><li>PostgreSQL</li><li>ML Pipelines</li><li>Storage & Retrieval</li><li>Docker</li><li>Distributed Processing</li></ul></div>
+    <div class="sc"><div class="sc-ic">🏗️</div><div class="sc-name">System Architecture</div><div class="sc-sub">// Design Patterns</div><ul class="sl"><li>React</li><li>REST APIs</li><li>Backend Workflow Automation</li><li>Scalable System Design</li><li>SMTP & PDF Automation</li><li>Compliance Systems</li><li>Audit Logging</li><li>Multi-recipient Dispatch</li></ul></div>
+  </div>
+  <div><div class="lbl" style="margin-bottom:1.2rem">Credentials</div>
+  <div class="certs-g fi">
+    <div class="cc"><div class="cc-p">DeepLearning.AI</div><div class="cc-n">Generative AI with LLMs</div></div>
+    <div class="cc"><div class="cc-p">DeepLearning.AI</div><div class="cc-n">Retrieval-Augmented Generation</div></div>
+    <div class="cc"><div class="cc-p">DeepLearning.AI</div><div class="cc-n">Agentic AI Systems</div></div>
+    <div class="cc"><div class="cc-p">DeepLearning.AI</div><div class="cc-n">LangChain for LLM Applications</div></div>
+    <div class="cc"><div class="cc-p">Amazon Web Services</div><div class="cc-n">AWS Generative AI Introduction</div></div>
+    <div class="cc"><div class="cc-p">Amazon Web Services</div><div class="cc-n">AWS Machine Learning Foundations</div></div>
+    <div class="cc"><div class="cc-p">Bootcamp</div><div class="cc-n">Data Engineering Bootcamp</div></div>
+    <div class="cc"><div class="cc-p">Udacity</div><div class="cc-n">Generative AI Introduction</div></div>
+  </div></div>
+</section>
+
+<section id="blog">
+  <div class="lbl">Thought Leadership</div>
+  <h2 class="st fi">Writing &<br>Insights</h2>
+  <p class="sub fi">Deep dives on AI infrastructure, production deployment, and enterprise architecture patterns.</p>
+  <div class="blog-g fi">
+    <a href="#contact" class="bc2"><div class="bt">RAG Architecture</div><h3 class="bn">Building Production-Grade RAG: Why Chunking Strategy Changes Everything</h3><p class="be">Most RAG implementations fail at chunking. Semantic chunking, overlapping windows, and document-aware splitting dramatically improve retrieval precision in enterprise knowledge systems.</p><div class="bm">AI Infrastructure · 8 min read</div></a>
+    <a href="#contact" class="bc2"><div class="bt">Agentic AI</div><h3 class="bn">From Single LLM Calls to Agentic Pipelines: A Practical Architecture Guide</h3><p class="be">When single-prompt LLMs hit their limits, agentic systems take over. The planner-executor-critic pattern and when tool-calling is worth the complexity.</p><div class="bm">Agentic Systems · 10 min read</div></a>
+    <a href="#contact" class="bc2"><div class="bt">Cloud Deployment</div><h3 class="bn">Deploying LLMs on AWS: Cost, Latency, and Scaling Trade-offs at Enterprise Scale</h3><p class="be">Running AI in production isn't just about model quality — it's cost per inference, cold start latency, and auto-scaling that doesn't break your budget.</p><div class="bm">AWS · Infrastructure · 12 min read</div></a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-g fi">
+    <div class="ci">
+      <div class="lbl">Contact</div>
+      <h2 class="st">Let's Build<br>Something Real</h2>
+      <p>Looking for an AI Infrastructure Engineer who can take your AI ambitions from architecture diagram to production deployment? Let's talk.</p>
+      <div class="cl-list">
+        <a href="mailto:mikencube03@gmail.com" class="cl-item"><em class="cl-ic">✉</em><div><span class="cl-lbl">Email</span><span class="cl-val">mikencube03@gmail.com</span></div></a>
+        <a href="https://github.com/MikeNcube" target="_blank" class="cl-item"><em class="cl-ic">⌥</em><div><span class="cl-lbl">GitHub</span><span class="cl-val">github.com/MikeNcube</span></div></a>
+        <a href="https://www.linkedin.com/in/mike-ncube-669563a7/" target="_blank" class="cl-item"><em class="cl-ic" style="font-family:'IBM Plex Mono',monospace;font-size:.75rem">in</em><div><span class="cl-lbl">LinkedIn</span><span class="cl-val">Mike Ncube</span></div></a>
+      </div>
+    </div>
+    <form onsubmit="submitForm(event)">
+      <div class="fg"><label class="fl">Your Name</label><input type="text" placeholder="Jane Smith" required /></div>
+      <div class="fg"><label class="fl">Email Address</label><input type="email" placeholder="jane@company.com" required /></div>
+      <div class="fg"><label class="fl">Subject</label><input type="text" placeholder="AI Infrastructure Project" required /></div>
+      <div class="fg"><label class="fl">Message</label><textarea placeholder="Tell me about your project and technical challenges..." required></textarea></div>
+      <button type="submit" class="fsub">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span class="fc">© 2025 Mike S Ncube. All rights reserved.</span>
+  <div class="fs-list">
+    <a href="https://github.com/MikeNcube" target="_blank" class="fs">GitHub</a>
+    <a href="https://www.linkedin.com/in/mike-ncube-669563a7/" target="_blank" class="fs">LinkedIn</a>
+    <a href="mailto:mikencube03@gmail.com" class="fs">Email</a>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)});
+  function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
+  function closeMenu(){document.getElementById('navLinks').classList.remove('open')}
+  const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('v');obs.unobserve(x.target)}})},{threshold:.08});
+  document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+  window.addEventListener('load',()=>{document.querySelectorAll('#hero .fi').forEach((el,i)=>setTimeout(()=>el.classList.add('v'),200+i*220))});
+  function submitForm(e){e.preventDefault();const b=e.target.querySelector('.fsub');b.textContent='Message Sent ✓';b.style.background='var(--green)';setTimeout(()=>{b.textContent='Send Message →';b.style.background='var(--cyan)';e.target.reset()},3500)}
+</script>
+</body>
+</html>
+```
+
+---
+
+**After pasting, your folder must contain these 3 files side by side:**
+```
+your-folder/
+├── index.html        ← the code above
+├── Mike_Org.jpeg     ← your LinkedIn headshot
+└── Mike_3d.png       ← your 3D portrait
