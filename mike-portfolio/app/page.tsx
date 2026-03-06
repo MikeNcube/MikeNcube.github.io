@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -10,7 +10,7 @@ const cardVariants = {
 };
 
 const projects = [
-  { num: '01', title: 'Zororo Phumulani - WWF Platform', desc: '7-step compliance workflow deployed across 26 countries. FIC-compliant ID verification, POPIA/FAIS consent, automated PDF generation and SMTP dispatch.', tags: ['Railway', 'POPIA', 'SMTP', 'PDF'], metrics: [{ val: '26', label: 'Countries' }, { val: '7', label: 'Steps' }, { val: '100%', label: 'Compliant' }], color: '#0066FF' },
+  { num: '01', title: 'Funeral Digital Form', desc: '7-step compliance workflow deployed across 26 countries. FIC-compliant ID verification, POPIA/FAIS consent, automated PDF generation and SMTP dispatch.', tags: ['Railway', 'POPIA', 'SMTP', 'PDF'], metrics: [{ val: '26', label: 'Countries' }, { val: '7', label: 'Steps' }, { val: '100%', label: 'Compliant' }], color: '#0066FF' },
   { num: '02', title: 'ML Recommendation Pipeline', desc: '92% prediction accuracy on 10M+ records/day with 60% latency reduction using Apache Spark and PostgreSQL.', tags: ['Spark', 'PostgreSQL', 'Docker', 'Python'], metrics: [{ val: '92%', label: 'Accuracy' }, { val: '10M+', label: 'Records/Day' }, { val: '60%', label: 'Less Latency' }], color: '#00C896' },
   { num: '03', title: 'AWS Resilient Infrastructure', desc: 'Multi-AZ architecture with ALB, Auto Scaling, EC2, and CodePipeline achieving 99.9%+ uptime SLA.', tags: ['AWS ALB', 'Auto Scaling', 'EC2', 'CI/CD'], metrics: [{ val: '99.9%', label: 'Uptime' }], color: '#FF6B35' },
   { num: '04', title: 'RAG Enterprise Knowledge System', desc: 'Full RAG pipeline with semantic chunking, MMR reranking, hybrid dense/sparse retrieval for enterprise document corpora.', tags: ['LangChain', 'Vector DB', 'Embeddings', 'LLM'], metrics: [{ val: 'Hybrid', label: 'Retrieval' }, { val: 'MMR', label: 'Reranking' }], color: '#0066FF' },
@@ -52,8 +52,7 @@ function ChatWidget() {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', paddingTop: 60 }}>
-      <img src="/Mike_3d.png" alt="Mike 3D" style={{ position: 'absolute', top: -30, right: -20, width: 180, height: 180, zIndex: 0, opacity: 0.7, pointerEvents: 'none', objectFit: 'contain', animation: 'float 6s ease-in-out infinite' }} />
+    <div style={{ position: 'relative', width: '100%', paddingTop: 0 }}>
       <div style={{ position: 'relative', zIndex: 1, background: 'rgba(3,3,3,0.8)', backdropFilter: 'blur(20px)', border: '1px solid rgba(0,102,255,0.3)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 0 40px rgba(0,102,255,0.15)', width: '100%' }}></div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'rgba(0,102,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ display: 'flex', gap: 6 }}>
@@ -189,7 +188,7 @@ export default function Home() {
       <section id="about" style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: 64, padding: '120px 64px 80px' }}>
 
         <motion.div initial={{ opacity: 0, x: -60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24, position: "relative" }}>
             <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#00C896', boxShadow: '0 0 8px #00C896' }}></div>
             <span style={{ fontSize: 11, fontFamily: 'monospace', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#00C896' }}>AI Infrastructure Engineer</span>
           </div>
@@ -276,7 +275,7 @@ export default function Home() {
       <section id="contact" style={{ padding: '96px 64px' }}>
         <div style={{ maxWidth: 640, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <h2 style={{ fontWeight: 900, color: '#fff', fontSize: 'clamp(2rem,4vw,3rem)', marginBottom: 16 }}>Lets Build Something Real</h2>
+            <img src="/Mike_3d.png" alt="Mike 3D" style={{ width: 160, height: 160, objectFit: "contain", animation: "float 6s ease-in-out infinite", margin: "0 auto 16px", display: "block", filter: "drop-shadow(0 0 20px rgba(0,102,255,0.6))" }} /><h2 style={{ fontWeight: 900, color: "#fff", fontSize: "clamp(2rem,4vw,3rem)", marginBottom: 16 }}>Lets Build Something Real</h2>
             <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 15, lineHeight: 1.7 }}>Looking for an AI Infrastructure Engineer who can take your AI ambitions from architecture to production?</p>
           </div>
           <ContactForm />
@@ -294,3 +293,11 @@ export default function Home() {
     </main>
   );
 }
+
+
+
+
+
+
+
+
