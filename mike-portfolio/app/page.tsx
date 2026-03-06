@@ -6,7 +6,7 @@ const RESPONSES = {"rag":"RAG pipeline:\n-> Semantic chunking\n-> Vector DB stor
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
-  visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.12, duration: 0.6 } }),
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.12, duration: 0.6 } }),
 };
 
 const projects = [
