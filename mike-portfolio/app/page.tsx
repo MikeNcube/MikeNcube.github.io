@@ -40,7 +40,7 @@ function ChatWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const send = async (text) => {
+  const send = async (text: string) => {
     const msg = text || input.trim();
     if (!msg || loading) return;
     setInput('');
