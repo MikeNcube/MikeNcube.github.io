@@ -40,7 +40,7 @@ function ChatWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const send = async (text: string) => {
+  const send = async (text: string = "") => {
     const msg = text || input.trim();
     if (!msg || loading) return;
     setInput('');
@@ -92,8 +92,8 @@ function ChatWidget() {
         ))}
       </div>
       <div style={{ display: 'flex', gap: 8, padding: 12, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <input type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} placeholder="Ask about Mikes expertise..." disabled={loading} style={{ flex: 1, padding: '8px 12px', fontSize: 13, borderRadius: 8, outline: 'none', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.87)' }} />
-        <button onClick={() => send()} disabled={loading || !input.trim()} style={{ width: 36, height: 36, borderRadius: 8, border: 'none', cursor: 'pointer', background: '#0066FF', color: '#fff', fontSize: 14, flexShrink: 0 }}>Go</button>
+        <input type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send(input)} placeholder="Ask about Mikes expertise..." disabled={loading} style={{ flex: 1, padding: '8px 12px', fontSize: 13, borderRadius: 8, outline: 'none', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.87)' }} />
+        <button onClick={() => send(input)} disabled={loading || !input.trim()} style={{ width: 36, height: 36, borderRadius: 8, border: 'none', cursor: 'pointer', background: '#0066FF', color: '#fff', fontSize: 14, flexShrink: 0 }}>Go</button>
       </div>
     </div>
   );
