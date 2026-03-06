@@ -130,7 +130,7 @@ export default function Home() {
 
       {/* NAV */}
       <motion.nav initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-8 py-4"
         style={{ background: 'rgba(13,17,23,0.9)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <span className="font-black text-lg text-white">MIKE<span style={{ color: '#0066FF' }}>.</span>NCUBE</span>
         <div className="hidden md:flex gap-8">
@@ -142,8 +142,8 @@ export default function Home() {
       </motion.nav>
 
       {/* HERO */}
-      <section id="about" className="min-h-screen flex flex-col justify-center px-8 md:px-16 pt-24 pb-16">
-        <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-16 items-center">
+      <section id="about" className="min-h-screen flex flex-col justify-center px-4 md:px-16 pt-20 pb-8">
+        <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-8 md:gap-16 items-center">
 
           {/* LEFT */}
           <motion.div initial={{ opacity: 0, x: -60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
@@ -151,16 +151,16 @@ export default function Home() {
               <motion.div animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 2, repeat: Infinity }} className="w-2 h-2 rounded-full" style={{ background: '#00C896' }} />
               <span className="text-xs font-mono tracking-widest uppercase" style={{ color: '#00C896' }}>AI Infrastructure Engineer</span>
             </div>
-            <h1 className="font-black leading-none mb-4" style={{ fontSize: 'clamp(3rem,6vw,5.5rem)', letterSpacing: '-0.03em' }}>
+            <h1 className="font-black leading-none mb-4" style={{ fontSize: 'clamp(2.5rem,5vw,5.5rem)', letterSpacing: '-0.03em' }}>
               <span className="text-white">Mike S</span><br />
               <span className="glow-text">Ncube</span>
             </h1>
             <p className="text-base leading-relaxed mb-8 max-w-md" style={{ color: 'rgba(255,255,255,0.55)' }}>
               I design and deploy scalable AI systems â€” RAG architectures, agentic workflows, and cloud infrastructure built for real enterprise environments.
             </p>
-            <div className="flex gap-4 mb-10 flex-wrap">
-              <a href="#projects" className="px-7 py-3 rounded-lg font-semibold text-sm text-white inline-block" style={{ background: "#0066FF", textDecoration: "none" }}>View Projects</a>
-              <a href="#contact" className="px-7 py-3 rounded-lg font-semibold text-sm" style={{ border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.8)' }}>Contact Me</a>
+            <div className="flex gap-4 mb-8 flex-wrap">
+              <a href="#projects" style={{ padding: '13px 28px', borderRadius: 10, fontWeight: 700, fontSize: 14, background: '#0066FF', color: '#fff', textDecoration: 'none', display: 'inline-block' }}>View Projects</a>
+              <a href="#contact" style={{ padding: '13px 28px', borderRadius: 10, fontWeight: 700, fontSize: 14, border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.85)', textDecoration: 'none', display: 'inline-block' }}>Contact Me</a>
             </div>
             <div className="flex gap-8 pt-6 flex-wrap" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
               {stats.map(s => (
@@ -176,7 +176,7 @@ export default function Home() {
           <motion.div initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="flex flex-col gap-5 items-center">
 
             {/* PHOTO */}
-            <div className="relative w-full max-w-xs rounded-2xl overflow-hidden flex-shrink-0" style={{ height: 300, border: '2px solid rgba(0,102,255,0.4)', boxShadow: '0 0 40px rgba(0,102,255,0.2)' }}>
+            <div className="relative w-full max-w-xs rounded-2xl overflow-hidden flex-shrink-0 mx-auto" style={{ height: 280, border: '2px solid rgba(0,102,255,0.4)', boxShadow: '0 0 40px rgba(0,102,255,0.2)' }}>
               <img src="/Mike_Org.jpeg" alt="Mike Ncube" className="w-full h-full object-cover object-top" />
               <div className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center gap-2" style={{ background: 'linear-gradient(transparent, rgba(13,17,23,0.95))' }}>
                 <motion.div animate={{ scale: [1, 1.4, 1], opacity: [1, 0.4, 1] }} transition={{ duration: 2, repeat: Infinity }} className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: '#00C896' }} />
@@ -285,10 +285,10 @@ export default function Home() {
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="py-24 px-8 md:px-16">
+      <section id="projects" className="py-16 px-4 md:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-            <h2 className="font-black text-white" style={{ fontSize: 'clamp(2rem,4vw,3.5rem)' }}>GitHub Projects</h2>
+            <h2 style={{ fontWeight: 900, color: "#fff", fontSize: "clamp(2rem,4vw,3.5rem)" }}>GitHub Projects</h2>
             <div className="flex items-center gap-2">
               <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 2, repeat: Infinity }} className="w-2 h-2 rounded-full" style={{ background: '#00C896' }} />
               <span className="text-xs font-mono" style={{ color: '#00C896' }}>Auto-synced from GitHub</span>
@@ -329,7 +329,7 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
-                    <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity font-mono" style={{ color: 'rgba(255,255,255,0.4)' }}>View â†’</span>
+                    <span style={{ fontSize: 12, fontFamily: "monospace", color: "rgba(255,255,255,0.3)" }} style={{ color: 'rgba(255,255,255,0.4)' }}>View →</span>
                   </div>
                 </motion.div>
               ))}
@@ -339,10 +339,10 @@ export default function Home() {
       </section>
 
       {/* SKILLS */}
-      <section id="skills" className="py-24 px-8 md:px-16" style={{ background: 'rgba(0,0,0,0.2)' }}>
+      <section id="skills" className="py-16 px-4 md:px-16" style={{ background: 'rgba(0,0,0,0.2)' }}>
         <div className="max-w-7xl mx-auto">
           <h2 className="font-black text-white mb-12" style={{ fontSize: 'clamp(2rem,4vw,3.5rem)' }}>The Stack</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {skills.map((s, i) => (
               <motion.div key={s.category} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }} whileHover={{ y: -4 }} className="p-5 rounded-2xl"
@@ -364,7 +364,7 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="py-24 px-8 md:px-16">
+      <section id="contact" className="py-16 px-4 md:px-16">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-10">
             <img src="/Mike_3d.png" alt="Mike 3D" style={{ width: 120, height: 120, objectFit: 'contain', animation: 'float 6s ease-in-out infinite', margin: '0 auto 16px', filter: 'drop-shadow(0 0 20px rgba(0,102,255,0.6))' }} />
@@ -413,5 +413,6 @@ export default function Home() {
     </main>
   );
 }
+
 
 
