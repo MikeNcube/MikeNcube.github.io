@@ -136,7 +136,7 @@ function ContactForm() {
     }
   };
 
-  const inp = { width: '100%', padding: '12px 16px', fontSize: 14, borderRadius: 10, outline: 'none', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.87)', boxSizing: 'border-box', fontFamily: 'inherit' };
+  const inp = { width: '100%', padding: '12px 16px', fontSize: 14, borderRadius: 10, outline: 'none', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.87)', boxSizing: 'border-box' as const, fontFamily: 'inherit' };
 
   return (
     <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 32, marginBottom: 24 }}>
