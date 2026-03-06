@@ -1,18 +1,41 @@
-﻿'use client';
+﻿import { writeFileSync } from 'fs';
+
+const page = 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const MIKE_CONTEXT: Record<string, string> = {
-  recruiter: "You are Mike Ncube's AI assistant talking to a RECRUITER. Be professional and concise. Highlight: 5+ years building AI/ML systems, RAG architectures deployed across 26 countries, AWS infrastructure with 99.9% uptime, 92% ML accuracy on 10M+ records/day. Mike is available immediately for AI Infrastructure roles. Email: mikencube03@gmail.com. GitHub: MikeNcube.",
-  developer: "You are Mike Ncube's AI assistant talking to a DEVELOPER. Be technical and detailed. Highlight: RAG with semantic chunking, MMR reranking, hybrid dense/sparse retrieval. Agentic AI: planner-executor-critic multi-agent architecture. AWS: Multi-AZ, ALB, Auto Scaling, CodePipeline. Stack: Python, LangChain, Spark, PostgreSQL, Docker, Next.js. Open to collaboration.",
-  friend: "You are Mike Ncube's AI assistant talking to a FRIEND. Be casual, warm and fun. Mike is an AI engineer from South Africa who built cool AI systems deployed across 26 African countries. He loves building things that scale and is always up for a chat about AI, tech or life.",
+const VISITOR_TYPES = ['recruiter', 'developer', 'friend'];
+
+const MIKE_CONTEXT = {
+  recruiter: \You are Mike Ncube's AI assistant talking to a RECRUITER. Be professional and highlight:
+- 5+ years building AI/ML systems
+- RAG architectures deployed across 26 countries
+- AWS infrastructure with 99.9% uptime
+- 92% ML accuracy on 10M+ records/day
+- Available immediately for AI Infrastructure roles
+- Email: mikencube03@gmail.com
+Keep responses concise, impressive and hiring-focused.\,
+  developer: \You are Mike Ncube's AI assistant talking to a DEVELOPER. Be technical and highlight:
+- RAG: semantic chunking, MMR reranking, hybrid dense/sparse retrieval
+- Agentic AI: planner-executor-critic multi-agent architecture
+- AWS: Multi-AZ, ALB, Auto Scaling, CodePipeline
+- Stack: Python, LangChain, Spark, PostgreSQL, Docker, Next.js
+- Open to collaboration and technical discussions
+Keep responses detailed and technical.\,
+  friend: \You are Mike Ncube's AI assistant talking to a FRIEND. Be casual and fun:
+- Mike is an AI engineer from South Africa
+- He builds cool AI systems that actually work in production
+- He deployed a compliance system across 26 African countries
+- He loves building things that scale
+- Always up for a chat about AI, tech or life
+Keep it casual, warm and fun.\,
 };
 
 const skills = [
-  { category: 'AI and LLM', icon: 'ðŸ¤–', items: ['RAG Architectures', 'Agentic AI', 'LangChain', 'Vector DBs', 'Prompt Engineering', 'Gemini CLI'] },
-  { category: 'Cloud and Infra', icon: 'â˜ï¸', items: ['AWS EC2/ALB', 'Auto Scaling', 'CI/CD', 'Terraform', 'Railway', 'VPC/IAM'] },
-  { category: 'Data and ML', icon: 'ðŸ“Š', items: ['Apache Spark', 'Python', 'PostgreSQL', 'Pandas', 'Docker', 'ML Pipelines'] },
-  { category: 'Architecture', icon: 'ðŸ—ï¸', items: ['System Design', 'REST APIs', 'React', 'Workflow Automation', 'Compliance Systems', 'Audit Logging'] },
+  { category: 'AI and LLM', icon: '🤖', items: ['RAG Architectures', 'Agentic AI', 'LangChain', 'Vector DBs', 'Prompt Engineering', 'Gemini CLI'] },
+  { category: 'Cloud and Infra', icon: '☁️', items: ['AWS EC2/ALB', 'Auto Scaling', 'CI/CD', 'Terraform', 'Railway', 'VPC/IAM'] },
+  { category: 'Data and ML', icon: '📊', items: ['Apache Spark', 'Python', 'PostgreSQL', 'Pandas', 'Docker', 'ML Pipelines'] },
+  { category: 'Architecture', icon: '🏗️', items: ['System Design', 'REST APIs', 'React', 'Workflow Automation', 'Compliance Systems', 'Audit Logging'] },
 ];
 
 const stats = [
@@ -22,32 +45,17 @@ const stats = [
   { val: '60%', label: 'Less Latency' },
 ];
 
-type Project = {
-  num: string;
-  title: string;
-  desc: string;
-  tags: string[];
-  metrics: { val: string; label: string }[];
-  color: string;
-  url: string;
-};
-
-type Message = {
-  role: 'ai' | 'user';
-  content: string;
-};
-
 export default function Home() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [visitorType, setVisitorType] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [chatStarted, setChatStarted] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState('idle');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     fetch('/api/github').then(r => r.json()).then(data => {
@@ -60,13 +68,13 @@ export default function Home() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const selectVisitorType = (type: string) => {
+  const selectVisitorType = (type) => {
     setVisitorType(type);
     setChatStarted(true);
-    const greetings: Record<string, string> = {
-      recruiter: "Hi! I'm Mike's AI assistant. I see you're a recruiter â€” great! Mike is actively looking for AI Infrastructure roles. What would you like to know about his experience?",
+    const greetings = {
+      recruiter: "Hi! I'm Mike's AI assistant. I see you're a recruiter — great! Mike is actively looking for AI Infrastructure roles. What would you like to know about his experience?",
       developer: "Hey! Fellow developer here. Mike's built some seriously cool RAG and agentic AI systems. Want to geek out about the tech stack?",
-      friend: "Hey there! ðŸ‘‹ Mike's pretty awesome â€” built AI systems deployed across 26 countries! What do you want to know about him?",
+      friend: "Hey there! 👋 Mike's pretty awesome — built AI systems deployed across 26 countries! What do you want to know about him?",
     };
     setMessages([{ role: 'ai', content: greetings[type] }]);
   };
@@ -84,6 +92,7 @@ export default function Home() {
         body: JSON.stringify({
           message: msg,
           repos: projects,
+          visitorType,
           context: MIKE_CONTEXT[visitorType] || MIKE_CONTEXT.developer,
         }),
       });
@@ -119,12 +128,6 @@ export default function Home() {
     }
   };
 
-  const quickReplies: Record<string, string[]> = {
-    recruiter: ['Experience?', 'Available now?', 'Key projects?'],
-    developer: ['RAG details?', 'AWS stack?', 'Agentic AI?'],
-    friend: ['What does he do?', 'Cool projects?', 'Contact him'],
-  };
-
   return (
     <main className="min-h-screen" style={{ background: 'linear-gradient(135deg, #0d1117 0%, #0a0f1e 50%, #0d1117 100%)' }}>
 
@@ -156,10 +159,10 @@ export default function Home() {
               <span className="glow-text">Ncube</span>
             </h1>
             <p className="text-base leading-relaxed mb-8 max-w-md" style={{ color: 'rgba(255,255,255,0.55)' }}>
-              I design and deploy scalable AI systems â€” RAG architectures, agentic workflows, and cloud infrastructure built for real enterprise environments.
+              I design and deploy scalable AI systems — RAG architectures, agentic workflows, and cloud infrastructure built for real enterprise environments.
             </p>
             <div className="flex gap-4 mb-10 flex-wrap">
-              <a href="#projects" className="px-7 py-3 rounded-lg font-semibold text-sm text-white inline-block" style={{ background: "#0066FF", textDecoration: "none" }}>View Projects</a>
+              <a href="#projects" className="px-7 py-3 rounded-lg font-semibold text-sm text-white" style={{ background: '#0066FF' }}>View Projects</a>
               <a href="#contact" className="px-7 py-3 rounded-lg font-semibold text-sm" style={{ border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.8)' }}>Contact Me</a>
             </div>
             <div className="flex gap-8 pt-6 flex-wrap" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
@@ -204,19 +207,15 @@ export default function Home() {
               {/* Visitor selector */}
               <AnimatePresence>
                 {!chatStarted && (
-                  <motion.div initial={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-4">
+                  <motion.div initial={{ opacity: 1 }} exit={{ opacity: 0, height: 0 }} className="p-4">
                     <p className="text-xs mb-3 text-center font-mono" style={{ color: 'rgba(255,255,255,0.5)' }}>Who are you? I will tailor my responses for you.</p>
                     <div className="flex gap-2 justify-center flex-wrap">
-                      {[
-                        { type: 'recruiter', label: 'ðŸ’¼ Recruiter', desc: 'Hiring?' },
-                        { type: 'developer', label: 'ðŸ‘¨â€ðŸ’» Developer', desc: 'Tech talk?' },
-                        { type: 'friend', label: 'ðŸ‘‹ Friend', desc: 'Just curious?' }
-                      ].map(v => (
+                      {[{ type: 'recruiter', label: '💼 Recruiter', desc: 'Hiring?' }, { type: 'developer', label: '👨‍💻 Developer', desc: 'Tech talk?' }, { type: 'friend', label: '👋 Friend', desc: 'Just curious?' }].map(v => (
                         <motion.button key={v.type} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => selectVisitorType(v.type)}
                           className="px-3 py-2 rounded-xl text-xs font-semibold flex flex-col items-center gap-0.5"
                           style={{ background: 'rgba(0,102,255,0.12)', border: '1px solid rgba(0,102,255,0.3)', color: 'rgba(255,255,255,0.8)', cursor: 'pointer' }}>
                           <span>{v.label}</span>
-                          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10 }}>{v.desc}</span>
+                          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>{v.desc}</span>
                         </motion.button>
                       ))}
                     </div>
@@ -228,27 +227,21 @@ export default function Home() {
               {chatStarted && (
                 <div className="h-52 overflow-y-auto p-4 flex flex-col gap-3">
                   {messages.map((msg, i) => (
-                    <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                      className={'flex gap-2 ' + (msg.role === 'user' ? 'flex-row-reverse' : '')}>
+                    <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={"flex gap-2 " + (msg.role === 'user' ? 'flex-row-reverse' : '')}>
                       <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold text-white"
                         style={{ background: msg.role === 'ai' ? 'linear-gradient(135deg,#0066FF,#00C896)' : 'rgba(255,255,255,0.1)' }}>
                         {msg.role === 'ai' ? 'AI' : 'U'}
                       </div>
-                      <div className="max-w-xs px-3 py-2 text-xs leading-relaxed"
-                        style={{ whiteSpace: 'pre-line', background: msg.role === 'ai' ? 'rgba(255,255,255,0.05)' : 'rgba(0,102,255,0.2)', border: '1px solid ' + (msg.role === 'ai' ? 'rgba(255,255,255,0.08)' : 'rgba(0,102,255,0.3)'), borderRadius: msg.role === 'ai' ? '4px 12px 12px 12px' : '12px 4px 12px 12px', color: 'rgba(255,255,255,0.85)' }}>
+                      <div className="max-w-xs px-3 py-2 text-xs leading-relaxed" style={{ whiteSpace: 'pre-line', background: msg.role === 'ai' ? 'rgba(255,255,255,0.05)' : 'rgba(0,102,255,0.2)', border: '1px solid ' + (msg.role === 'ai' ? 'rgba(255,255,255,0.08)' : 'rgba(0,102,255,0.3)'), borderRadius: msg.role === 'ai' ? '4px 12px 12px 12px' : '12px 4px 12px 12px', color: 'rgba(255,255,255,0.85)' }}>
                         {msg.content}
                       </div>
                     </motion.div>
                   ))}
                   {loading && (
                     <div className="flex gap-2">
-                      <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold text-white"
-                        style={{ background: 'linear-gradient(135deg,#0066FF,#00C896)' }}>AI</div>
-                      <div className="px-3 py-2 flex gap-1 items-center"
-                        style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px 12px 12px 12px' }}>
-                        <div className="typing-dot"></div>
-                        <div className="typing-dot"></div>
-                        <div className="typing-dot"></div>
+                      <div className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg,#0066FF,#00C896)' }}>AI</div>
+                      <div className="px-3 py-2 flex gap-1 items-center" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px 12px 12px 12px' }}>
+                        <div className="typing-dot"></div><div className="typing-dot"></div><div className="typing-dot"></div>
                       </div>
                     </div>
                   )}
@@ -259,9 +252,10 @@ export default function Home() {
               {/* Quick replies */}
               {chatStarted && (
                 <div className="px-3 py-2 flex gap-2 overflow-x-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                  {(quickReplies[visitorType] || quickReplies.developer).map(s => (
-                    <button key={s} onClick={() => send(s)}
-                      className="text-xs px-3 py-1 rounded-full flex-shrink-0 whitespace-nowrap"
+                  {(visitorType === 'recruiter' ? ['Experience?', 'Available now?', 'Key projects?'] :
+                    visitorType === 'developer' ? ['RAG details?', 'AWS stack?', 'Agentic AI?'] :
+                    ['What does he do?', 'Cool projects?', 'Contact him']).map(s => (
+                    <button key={s} onClick={() => send(s)} className="text-xs px-3 py-1 rounded-full flex-shrink-0 whitespace-nowrap"
                       style={{ background: 'rgba(0,102,255,0.1)', border: '1px solid rgba(0,102,255,0.3)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>{s}</button>
                   ))}
                 </div>
@@ -269,15 +263,14 @@ export default function Home() {
 
               {/* Input */}
               <div className="flex gap-2 p-3" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                <input type="text" value={input} onChange={e => setInput(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && send(input)}
-                  placeholder={chatStarted ? 'Ask me anything about Mike...' : 'Select who you are first...'}
+                <input type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send(input)}
+                  placeholder={chatStarted ? "Ask me anything about Mike..." : "Select who you are first..."}
                   disabled={!chatStarted || loading}
                   className="flex-1 px-3 py-2 rounded-lg text-xs outline-none"
                   style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.87)' }} />
                 <button onClick={() => send(input)} disabled={!chatStarted || loading || !input.trim()}
                   className="w-8 h-8 rounded-lg text-white text-xs font-bold flex-shrink-0 flex items-center justify-center"
-                  style={{ background: '#0066FF', border: 'none', cursor: 'pointer' }}>â†’</button>
+                  style={{ background: '#0066FF', border: 'none', cursor: 'pointer' }}>→</button>
               </div>
             </div>
           </motion.div>
@@ -294,27 +287,25 @@ export default function Home() {
               <span className="text-xs font-mono" style={{ color: '#00C896' }}>Auto-synced from GitHub</span>
             </div>
           </div>
-          <p className="mb-12 text-sm" style={{ color: 'rgba(255,255,255,0.45)', maxWidth: 500 }}>Live projects pulled directly from GitHub â€” always up to date.</p>
+          <p className="mb-12 text-sm" style={{ color: 'rgba(255,255,255,0.45)', maxWidth: 500 }}>Live projects pulled directly from GitHub — always up to date.</p>
 
           {loadingProjects ? (
             <div className="flex gap-3 items-center p-6">
-              <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                className="w-5 h-5 rounded-full" style={{ border: '2px solid rgba(0,102,255,0.3)', borderTop: '2px solid #0066FF' }} />
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }} className="w-5 h-5 rounded-full" style={{ border: '2px solid rgba(0,102,255,0.3)', borderTop: '2px solid #0066FF' }} />
               <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.4)' }}>Fetching from GitHub...</span>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-4">
               {projects.map((p, i) => (
-                <motion.div key={p.num} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }} whileHover={{ y: -4 }} onClick={() => window.open(p.url, '_blank')}
+                <motion.div key={p.num} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                  whileHover={{ y: -4 }} onClick={() => window.open(p.url, '_blank')}
                   className="p-6 rounded-2xl cursor-pointer group"
                   style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid ' + p.color + '33' }}>
                   <div className="flex justify-between items-start mb-4">
                     <span className="font-black" style={{ fontSize: 56, color: p.color + '18', lineHeight: 1 }}>{p.num}</span>
                     <div className="flex gap-2 flex-wrap justify-end">
                       {p.tags.slice(0, 2).map(tag => (
-                        <span key={tag} className="text-xs px-2 py-1 rounded-full"
-                          style={{ background: p.color + '18', border: '1px solid ' + p.color + '44', color: p.color }}>{tag}</span>
+                        <span key={tag} className="text-xs px-2 py-1 rounded-full" style={{ background: p.color + '18', border: '1px solid ' + p.color + '44', color: p.color }}>{tag}</span>
                       ))}
                     </div>
                   </div>
@@ -329,7 +320,7 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
-                    <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity font-mono" style={{ color: 'rgba(255,255,255,0.4)' }}>View â†’</span>
+                    <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity font-mono" style={{ color: 'rgba(255,255,255,0.4)' }}>View →</span>
                   </div>
                 </motion.div>
               ))}
@@ -344,16 +335,15 @@ export default function Home() {
           <h2 className="font-black text-white mb-12" style={{ fontSize: 'clamp(2rem,4vw,3.5rem)' }}>The Stack</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {skills.map((s, i) => (
-              <motion.div key={s.category} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }} whileHover={{ y: -4 }} className="p-5 rounded-2xl"
+              <motion.div key={s.category} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -4 }} className="p-5 rounded-2xl"
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <div className="text-2xl mb-2">{s.icon}</div>
                 <div className="font-bold text-white text-sm mb-4">{s.category}</div>
                 <ul className="space-y-2">
                   {s.items.map(item => (
-                    <li key={item} className="text-xs flex items-center gap-2"
-                      style={{ color: 'rgba(255,255,255,0.5)', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 4 }}>
-                      <span style={{ color: '#0066FF', fontSize: 8 }}>â–¶</span>{item}
+                    <li key={item} className="text-xs flex items-center gap-2" style={{ color: 'rgba(255,255,255,0.5)', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 4 }}>
+                      <span style={{ color: '#0066FF', fontSize: 8 }}>▶</span>{item}
                     </li>
                   ))}
                 </ul>
@@ -396,7 +386,7 @@ export default function Home() {
             <button onClick={handleContact} disabled={formStatus === 'sending' || !form.name || !form.email || !form.message}
               className="w-full py-4 rounded-xl font-bold text-sm text-white transition-all"
               style={{ background: formStatus === 'success' ? '#00C896' : formStatus === 'error' ? '#FF5F57' : '#0066FF', border: 'none', cursor: 'pointer' }}>
-              {formStatus === 'sending' ? 'Sending...' : formStatus === 'success' ? 'âœ“ Message Sent!' : formStatus === 'error' ? 'Failed - Try Again' : 'Send Message'}
+              {formStatus === 'sending' ? 'Sending...' : formStatus === 'success' ? '✓ Message Sent!' : formStatus === 'error' ? 'Failed - Try Again' : 'Send Message'}
             </button>
           </div>
 
@@ -412,6 +402,7 @@ export default function Home() {
 
     </main>
   );
-}
+};
 
-
+writeFileSync('app/page.tsx', page, 'utf8');
+console.log('New portfolio written successfully!');
