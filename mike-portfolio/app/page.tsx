@@ -24,7 +24,7 @@ const skills = [
   { category: 'Architecture', icon: 'Arch', items: ['System Design', 'REST APIs', 'React', 'Workflow Automation', 'Compliance Systems', 'Audit Logging'] },
 ];
 
-function getResponse(q) {
+function getResponse(q: string) {
   const t = q.toLowerCase();
   if (t.includes('rag') || t.includes('retrieval')) return RESPONSES.rag;
   if (t.includes('aws') || t.includes('cloud')) return RESPONSES.aws;
